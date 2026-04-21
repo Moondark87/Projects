@@ -1,0 +1,52 @@
+flowchart TD
+
+    subgraph Monitoring_Layer[Monitoring Layer]
+        ITIM[ITIM Monitoring]
+        EMP[Endpoint Management Platform]
+        SIEMIngest[SIEM Event Sources]
+    end
+
+    subgraph Routing_Layer[Routing Layer (Chat-Based Message Bus)]
+        ChatIngest[Chat Ingestion Channel]
+        PatternMatch[Pattern-Based Routing Logic]
+    end
+
+    subgraph Delivery_Layer[Notification Delivery Layer]
+        SMSAPI[SMS Delivery Provider (API)]
+        Broadcast[Mass Alert Broadcast Engine]
+    end
+
+    subgraph Recipients[Recipient Layer]
+        OnCall[On-Call Teams]
+        NOC[NOC/SOC]
+        Eng[Engineering]
+        Execs[Leadership]
+    end
+
+    subgraph Logging_Layer[Logging & Intelligence Layer]
+        SIEM[SIEM Correlation & Retention]
+    end
+
+    ITIM --> ChatIngest
+    EMP --> ChatIngest
+    SIEMIngest --> ChatIngest
+
+    ChatIngest --> PatternMatch
+
+    PatternMatch --> SMSAPI
+    PatternMatch --> Broadcast
+
+    SMSAPI --> OnCall
+    SMSAPI --> NOC
+    SMSAPI --> Eng
+    SMSAPI --> Execs
+
+    Broadcast --> OnCall
+    Broadcast --> NOC
+    Broadcast --> Eng
+    Broadcast --> Execs
+
+    ChatIngest --> SIEM
+    PatternMatch --> SIEM
+    SMSAPI --> SIEM
+    Broadcast --> SIEM
