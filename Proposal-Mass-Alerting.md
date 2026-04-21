@@ -1,5 +1,5 @@
 # Mass Alerting Architecture Proposal
-Author: Alex Scheaffer  
+Author: Alex  
 Status: Implemented (Sanitized Version)
 
 ## Overview
