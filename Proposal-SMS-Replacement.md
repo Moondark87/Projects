@@ -1,5 +1,6 @@
 # SMS Delivery Replacement Proposal
 Author: Alex
+
 Status: Implemented (Sanitized Version)
 
 ## Overview
