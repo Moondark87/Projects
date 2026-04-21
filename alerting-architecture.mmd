@@ -1,52 +1,45 @@
-flowchart TD
-
-    subgraph Monitoring_Layer[Monitoring Layer]
-        ITIM[ITIM Monitoring]
-        EMP[Endpoint Management Platform]
-        SIEMIngest[SIEM Event Sources]
+graph TD
+    %% Layer 1: Monitoring
+    subgraph L1 [Monitoring & Alerting Layer]
+        A[<b>Monitoring System - NMS</b><br/>Thresholds & Outage Checks<br/>Webhook Event Triggers]
     end
 
-    subgraph Routing_Layer[Routing Layer (Chat-Based Message Bus)]
-        ChatIngest[Chat Ingestion Channel]
-        PatternMatch[Pattern-Based Routing Logic]
+    %% Layer 2: Communication
+    subgraph L2 [Communication & Routing Layer]
+        B1[<b>Self-Hosted Chat Server</b><br/>Alert Ingestion Channel<br/>Pattern-Matched Routing<br/>Location / Severity Logic]
+        B2[<b>Message Bus</b><br/>Human-Readable Audit Trail<br/>Internal Collaboration]
+        B1 <--> B2
     end
 
-    subgraph Delivery_Layer[Notification Delivery Layer]
-        SMSAPI[SMS Delivery Provider (API)]
-        Broadcast[Mass Alert Broadcast Engine]
+    %% Layer 3: Delivery
+    subgraph L3 [Notification Delivery Layer]
+        C
     end
 
-    subgraph Recipients[Recipient Layer]
-        OnCall[On-Call Teams]
-        NOC[NOC/SOC]
-        Eng[Engineering]
-        Execs[Leadership]
+    %% Layer 4: Recipients
+    subgraph L4 [Recipient Layer]
+        D[<b>On-Call Teams / NOC / SOC</b><br/>Engineering<br/>Executive Notifications]
     end
 
-    subgraph Logging_Layer[Logging & Intelligence Layer]
-        SIEM[SIEM Correlation & Retention]
+    %% Layer 5: Logging
+    subgraph L5 [Logging & Intelligence Layer]
+        E[(<b>SIEM / Log Platform</b><br/>Ingests Monitoring Events<br/>Ingests Chat Messages<br/>Ingests SMS Delivery Logs<br/>Correlation & Retention)]
     end
 
-    ITIM --> ChatIngest
-    EMP --> ChatIngest
-    SIEMIngest --> ChatIngest
+    %% Main Flow Connections
+    A --> B1
+    B1 --> C
+    C --> D
 
-    ChatIngest --> PatternMatch
+    %% Logging Connections
+    A -- Alert Logs --> E
+    B1 -- " " --> E
+    C -- Delivery Logs --> E
+    D -- Flow Logs --> E
 
-    PatternMatch --> SMSAPI
-    PatternMatch --> Broadcast
-
-    SMSAPI --> OnCall
-    SMSAPI --> NOC
-    SMSAPI --> Eng
-    SMSAPI --> Execs
-
-    Broadcast --> OnCall
-    Broadcast --> NOC
-    Broadcast --> Eng
-    Broadcast --> Execs
-
-    ChatIngest --> SIEM
-    PatternMatch --> SIEM
-    SMSAPI --> SIEM
-    Broadcast --> SIEM
+    %% Styling
+    style L1 fill:#dae8fc,stroke:#6c8ebf
+    style L2 fill:#ffe6cc,stroke:#d79b00
+    style L3 fill:#d5e8d4,stroke:#82b366
+    style L4 fill:#e1d5e7,stroke:#9673a6
+    style L5 fill:#f5f5f5,stroke:#666666
