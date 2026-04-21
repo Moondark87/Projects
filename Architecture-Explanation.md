@@ -1,5 +1,6 @@
 # Unified Alerting & Notification Architecture  
 Author: Alex 
+
 Document: Architecture Explanation (Sanitized)
 
 ## Overview
