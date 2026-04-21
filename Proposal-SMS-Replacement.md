@@ -1,5 +1,5 @@
 # SMS Delivery Replacement Proposal
-Author: Alex Scheaffer  
+Author: Alex
 Status: Implemented (Sanitized Version)
 
 ## Overview
